@@ -101,7 +101,7 @@ module.exports = {
       , self = this
       , key
     for (var i=0; i<project.branches.length; i++) {
-      if (project.branches[i].name === 'master') {
+      if (project.branches[i].name === 'master' || project.branches[i].name  === 'default') {
         key = project.branches[i].pubkey.toString()
         break;
       }
@@ -221,7 +221,7 @@ function listRepos(client, next) {
   client.get(url, function (err, data, req) {
     if (err) return next(err)
       next(null, data.map(api.parseRepo).filter(function (repo) {
-        return repo.config.scm === 'git';
+        return (repo.config.scm === 'git' || repo.config.scm === 'hg');
       }))
   })
 }
